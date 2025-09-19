@@ -1,0 +1,7 @@
+Triage Agent: The first line of defense. Its job is to ingest raw data (logs, alerts), filter out the noise, and group related events.
+
+Investigation Agent: Receives high-priority alerts from the Triage Agent. This agent's primary role is deep-dive analysis.
+
+Threat Hunting Agent: Proactively searches for threats that may have evaded initial detection, guided by hypotheses and threat intelligence.
+
+Response Agent: Takes action based on the findings of the Investigation and Threat Hunting agents. Its actions can range from isolating a compromised device to drafting a detailed incident report.
