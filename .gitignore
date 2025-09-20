@@ -1,5 +1,4 @@
 .venv
 .env
-data/*
 !data/README.md
 model/best_balanced_model.joblib
