@@ -1,0 +1,37 @@
+4. Development Plan
+
+You can implement it in these stages:
+
+Stage 1 — Setup Kafka locally (in Docker)
+
+Use Bitnami Kafka or Confluent image
+
+Create topic: network_logs
+
+Stage 2 — Stream Data
+
+Write a Python script to replay a dataset like CIC-IDS2018 as JSON logs
+
+Push to Kafka every 1–2 seconds to simulate live flow
+
+Stage 3 — Consume Data + Detect Anomalies
+
+Build a consumer.py that reads logs
+
+Apply your ML model (Isolation Forest or Autoencoder)
+
+Stage 4 — Integrate with LangGraph
+
+Define nodes for:
+
+Enrichment
+
+Correlation
+
+Detection
+
+Triage (LLM reasoning)
+
+Stage 5 — Visualize Alerts
+
+Push final outputs to Streamlit dashboard or Kibana index
