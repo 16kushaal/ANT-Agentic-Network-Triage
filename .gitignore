@@ -1,6 +1,6 @@
 .venv
 .env
 data/*.csv
-data/combined_realistic_clean.csv.gz
+data/*.csv.gz
 !data/README.md
 model/best_balanced_model.joblib
