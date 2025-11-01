@@ -4,3 +4,4 @@ data/*.csv
 data/*.csv.gz
 !data/README.md
 model/best_balanced_model.joblib
+plan.txt
