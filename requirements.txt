@@ -1,0 +1,7 @@
+joblib
+kafka
+pandas
+shap
+scikit-learn
+numpy
+crewai_tools

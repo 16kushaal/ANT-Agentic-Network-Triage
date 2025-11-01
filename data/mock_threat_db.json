@@ -1,0 +1,17 @@
+{
+  "8.8.8.8": {
+    "owner": "Google DNS",
+    "threat": "Benign",
+    "details": "Known safe public resolver."
+  },
+  "185.180.14.167": {
+    "owner": "Unknown",
+    "threat": "High",
+    "details": "IP associated with 'TrickBot' C&C server activity (2024-10-15)."
+  },
+  "10.0.2.15": {
+    "owner": "Internal Network",
+    "threat": "Info",
+    "details": "Internal asset: dev-web-02.local"
+  }
+}

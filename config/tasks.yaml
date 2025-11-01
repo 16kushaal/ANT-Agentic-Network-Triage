@@ -1,0 +1,64 @@
+task_anomaly:
+  description: >
+    Analyze the incoming network log: {network_log_message}.
+    Use the 'anomaly_tool' to determine if it is 'anomaly' or 'benign'.
+  expected_output: >
+    A simple string: either "anomaly" or "benign".
+  agent: anomaly_agent
+  # This task has no context, it runs first (or in parallel).
+
+task_classify:
+  description: >
+    Analyze the *same* incoming network log: {network_log_message}.
+    Use the 'classification_tool' to determine the specific threat type.
+  expected_output: >
+    A string with the threat class (e.g., "DDoS", "PortScan", "Benign").
+  agent: classification_agent
+  # --- KEY CHANGE ---
+  # REMOVED: context: [task_anomaly]
+  # This task now runs regardless of what task_anomaly finds.
+
+task_enrich:
+  description: >
+    A threat classification was made. Use the 'simulated_enrichment_tool' to
+    find CTI information on the IPs in the {network_log_message}.
+  expected_output: >
+    A short summary of CTI findings.
+  agent: enrichment_agent
+  context:
+    - task_classify # This task now correctly depends on the *classification*.
+
+task_explain:
+  description: >
+    The log was classified. Now, use the 'explanation_tool' on the
+    {network_log_message} to explain *why* the classification model made that decision.
+  expected_output: >
+    A 1-2 sentence explanation of the top features.
+  agent: xai_agent
+  context:
+    - task_classify # This also depends on the *classification*.
+
+task_synthesize:
+  description: >
+    Create a final triage report based on the findings from ALL agents.
+    You must intelligently combine the results from the 'anomaly' task
+    and the 'classification' task to assign a final priority.
+    
+    Use this logic:
+    1. If classification is a threat (e.g., 'DDoS'), priority is 'High' or 'Critical'.
+    2. If classification is 'Benign' BUT anomaly is 'anomaly', priority is 'Low'.
+    3. If classification is 'Benign' AND anomaly is 'benign', output a simple
+       "Benign" message and do not create a full report.
+       
+    Combine all context (threat type, CTI, explanation) into a final JSON.
+  expected_output: >
+    A single, valid JSON object representing the final triage report, OR
+    a simple "Benign" string if no threat or anomaly is found.
+  agent: synthesis_agent
+  # --- KEY CHANGE ---
+  # This task now takes context from *all* previous tasks to make its decision.
+  context:
+    - task_anomaly
+    - task_classify
+    - task_enrich
+    - task_explain
